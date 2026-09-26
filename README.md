@@ -6,8 +6,10 @@ publicación propias); comparten repositorio solo por conveniencia.
 
 - **[Ruta del Café — folleto R Markdown + Leaflet](#ruta-del-café--folleto-en-r-markdown-con-leaflet)**
   (raíz del repo, `index.Rmd` / `index.html`) — publicado y cerrado.
-- **[App Shiny — Estimador de Perfil de Taza](shiny-app/)** — en desarrollo.
-- **[Presentación reproducible del pitch](pitch-presentation/)** — en desarrollo.
+- **[App Shiny — Estimador de Perfil de Taza](shiny-app/)** — publicada:
+  https://lraigosov.shinyapps.io/ruta-del-cafe-perfil-taza/
+- **[Presentación reproducible del pitch](pitch-presentation/)** — publicada:
+  https://lraigosov.github.io/R_Markdown-Folleto/pitch-presentation/
 
 ---
 

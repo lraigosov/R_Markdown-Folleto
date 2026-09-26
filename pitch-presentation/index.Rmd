@@ -1,0 +1,96 @@
+---
+title: "Ruta del Café"
+subtitle: "Estimador de Perfil de Taza — pitch de la app"
+author: "lraigosov"
+date: "`r format(Sys.Date(), '%d de %B de %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    smaller: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+altitud_base <- c(
+  "Manizales" = 2150, "Pereira" = 1411, "Armenia" = 1483,
+  "Salento" = 1895, "Filandia" = 1923, "Circasia" = 1760
+)
+
+calcular_perfil <- function(altitud) {
+  acidez <- max(0, min(10, 4 + (altitud - 1500) / 150))
+  cuerpo <- max(0, min(10, 7 - (altitud - 1500) / 300))
+  dulzor <- max(0, min(10, 5 + sin(altitud / 500) * 2))
+  c(Acidez = acidez, Cuerpo = cuerpo, Dulzor = dulzor)
+}
+```
+
+```{=html}
+<style>
+slides > slide {
+  background: #fdf6ec;
+  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  color: #3b2314;
+}
+slides > slide.title-slide {
+  background: linear-gradient(135deg, #3b2314 0%, #6f4e37 55%, #a97c50 100%);
+  color: #fdf6ec;
+}
+slides > slide.title-slide hgroup h1,
+slides > slide.title-slide hgroup h2 {
+  color: #fdf6ec;
+}
+h2 {
+  color: #6f4e37;
+}
+slide pre, slide pre code {
+  font-size: 0.72em;
+  line-height: 1.25;
+}
+</style>
+```
+
+## El problema
+
+- Elegir dónde sembrar o comprar café en el Eje Cafetero es una decisión con
+  muchas variables: altitud, clima, tradición de cada pueblo...
+- La mayoría de calculadoras de "perfil de taza" son hojas de cálculo
+  estáticas, sin forma de explorar distintos escenarios.
+- **Objetivo:** una herramienta simple, interactiva y reproducible para
+  explorar cómo cambiaría el perfil de una taza según el pueblo y la
+  altitud.
+
+## La solución: Estimador de Perfil de Taza
+
+Una app Shiny que convierte esa exploración en tres clics:
+
+1. El usuario elige un **pueblo cafetero** (Manizales, Pereira, Armenia,
+   Salento, Filandia o Circasia).
+2. Ajusta un **slider de altitud simulada**.
+3. La app recalcula al instante un perfil de **acidez, cuerpo y dulzor**
+   (escala 0–10), con gráfico de barras y resumen en texto.
+
+La documentación de uso vive dentro de la propia app, en su propia pestaña.
+
+## Cómo funciona (en vivo)
+
+El mismo cálculo de `server.R` se evalúa aquí, al generar esta diapositiva:
+
+```{r perfil-demo, fig.height=2.6, fig.width=7.2}
+altitud_efectiva <- altitud_base[["Salento"]] + 100
+round(calcular_perfil(altitud_efectiva), 1)
+```
+
+```{r grafico-demo, echo=FALSE, fig.height=2.6, fig.width=7.2}
+barplot(calcular_perfil(altitud_efectiva), ylim = c(0, 10),
+        col = c("#a97c50", "#6f4e37", "#3b2314"),
+        main = paste("Salento a", altitud_efectiva, "m"))
+```
+
+## Pruébala tú mismo
+
+- **App en vivo:** https://lraigosov.shinyapps.io/ruta-del-cafe-perfil-taza/
+- **Código fuente:** https://github.com/lraigosov/R_Markdown-Folleto/tree/main/shiny-app
+- **Esta presentación:** https://github.com/lraigosov/R_Markdown-Folleto/tree/main/pitch-presentation
+
+¡Gracias! ☕
