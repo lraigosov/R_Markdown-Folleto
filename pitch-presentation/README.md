@@ -2,25 +2,33 @@
 
 Complemento de [`../shiny-app`](../shiny-app): una presentación de 5
 diapositivas (incluida la de título) que promociona la app, hecha con
-Slidify o R Presentations (ioslides/`.Rpres`), con al menos una expresión R
-incrustada que se evalúe al momento de generar las diapositivas.
+`ioslides_presentation` (el formato HTML5 que usa R Presentations /
+RStudio Presenter), con expresiones R incrustadas que se evalúan al
+generar las diapositivas.
 
-**Estado:** carpeta reservada, contenido pendiente de diseño.
+**Publicada:** https://lraigosov.github.io/R_Markdown-Folleto/pitch-presentation/
 
 ## Checklist de la rúbrica
 
-- [ ] Hecha en Slidify o R Presentations
-- [ ] Exactamente 5 diapositivas
-- [ ] Contiene una expresión R incrustada que se evalúa y se muestra
-- [ ] Alojada en GitHub o RPubs
-- [ ] Sin errores de R visibles en la presentación
+- [x] Hecha en R Presentations (`ioslides_presentation`)
+- [x] Exactamente 5 diapositivas (título + 4)
+- [x] Contiene expresiones R incrustadas que se evalúan y se muestran
+      (texto y gráfico, reutilizando la misma lógica de `server.R`)
+- [x] Alojada en GitHub (GitHub Pages, mismo `main` que el resto del repo)
+- [x] Sin errores de R visibles en la presentación
 
-## Notas de hosting
+## Cómo recompilarla
 
-- Si se hace en **R Presentations** (`.Rpres`), lo más simple es publicarla a
-  RPubs con el botón *Publish* de RStudio, y pegar el link `http://` (no
-  `https://`) en el cuadro de la tarea.
-- Si se hace en **Slidify**, ya no es compatible con RPubs — hay que
-  publicarla vía GitHub Pages, en una rama llamada `gh-pages` que además
-  debe incluir un archivo `.nojekyll`. Esto no interfiere con el `main` de
-  este repo (que ya sirve el folleto Leaflet vía GitHub Pages).
+```r
+install.packages("rmarkdown")
+rmarkdown::render("pitch-presentation/index.Rmd", output_file = "index.html")
+```
+
+## Por qué GitHub Pages y no una rama `gh-pages`
+
+La nota de la tarea sobre una rama `gh-pages` con `.nojekyll` aplica solo si
+se usa **Slidify** (que ya no publica a RPubs). Usando R Presentations, el
+HTML resultante es una página estática más — no necesita nada especial más
+allá de vivir en una carpeta servida por GitHub Pages, así que se publicó en
+el mismo `main` que ya sirve el folleto Leaflet, sin rama ni configuración
+adicional.
