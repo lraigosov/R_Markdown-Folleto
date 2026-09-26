@@ -1,11 +1,14 @@
 # Estimador de Perfil de Taza — App Shiny
 
 Segunda tarea evaluada por pares de este curso: una app Shiny (`ui.R` +
-`server.R`) desplegada en shinyapps.io, más una presentación reproducible de
-5 diapositivas (ver [`../pitch-presentation`](../pitch-presentation)).
+`server.R`) desplegada en shinyapps.io, más una presentación reproducible
+(ver [`../pitch-presentation`](../pitch-presentation)).
 
-**Estado:** primer borrador funcional, pendiente de iterar el enfoque
-creativo contigo antes de desplegar la versión final.
+**App publicada:** https://lraigosov.shinyapps.io/ruta-del-cafe-perfil-taza/
+
+**Estado:** desplegada. El enfoque creativo (perfil de taza simulado por
+pueblo/altitud) ya está validado; queda pendiente la presentación
+reproducible del pitch.
 
 ## Qué hace (versión actual)
 
@@ -24,11 +27,11 @@ un link externo).
 - [x] Operación sobre la entrada en `server.R` — `calcular_perfil()`
 - [x] Salida reactiva — `renderPlot` + `renderPrint`
 - [x] Documentación en el propio sitio — pestaña "Cómo usar esta app"
-- [ ] Desplegada en shinyapps.io — **pendiente** (falta correr
-      `rsconnect::deployApp()` con tu cuenta)
-- [ ] "Sustancialmente diferente" del ejemplo de clase — borrador razonable,
-      pero conviene confirmar contigo el enfoque final antes de dar por
-      cerrado este punto
+- [x] Desplegada en shinyapps.io —
+      https://lraigosov.shinyapps.io/ruta-del-cafe-perfil-taza/
+- [x] "Sustancialmente diferente" del ejemplo de clase — combina selección
+      categórica + ajuste numérico sobre una fórmula propia con múltiples
+      salidas derivadas, no un único slider sobre una regresión lineal
 
 ## Cómo correrla localmente
 
