@@ -1,41 +1,41 @@
 # Ruta del Café — Folleto en R Markdown con Leaflet
 
-Folleto interactivo (`index.Rmd`) hecho con R Markdown, con un mapa Leaflet del
-Eje Cafetero colombiano (Manizales, Pereira, Armenia, Salento, Filandia,
-Circasia), capas base intercambiables (calles/satélite/oscuro), minimapa,
-ruta trazada entre pueblos y tarjetas descriptivas. La fecha de creación se
-calcula automáticamente con `Sys.Date()` al momento de compilar (knit).
+**Página publicada:** https://lraigosov.github.io/R_Markdown-Folleto/
 
-## 1. Compilar (knit)
+## Qué es esto
 
-En R o RStudio, con el directorio de trabajo en esta carpeta:
+Entrega de una tarea de Coursera que pide construir una página web con R
+Markdown, incrustar un mapa interactivo hecho con Leaflet, y publicarla
+(GitHub Pages, RPubs o Neocities). La rúbrica evalúa dos cosas puntuales:
+que la página muestre una fecha de creación reciente, y que el mapa sea
+reconociblemente un mapa Leaflet.
 
-```r
-install.packages(c("rmarkdown", "leaflet"))
-rmarkdown::render("index.Rmd")
-```
+## Por qué está hecho así
 
-Esto genera `index.html` (autocontenido, `self_contained: true`), listo para
-subir a cualquier hosting estático.
+- **Fecha dinámica**: en vez de escribir una fecha fija en el texto, el
+  documento la calcula con `Sys.Date()` en tiempo de compilación (`index.Rmd`,
+  chunk `setup`), para que cada vez que se recompile quede al día sin editar
+  nada a mano.
+- **Mapa Leaflet real** (no una imagen ni un mockup): capas base
+  intercambiables (calles, satélite, modo oscuro), marcadores con ícono y
+  popup por pueblo, ruta trazada y minimapa — para que sea evidente que es
+  un widget interactivo de Leaflet y no una captura de pantalla.
+- **Tema "Ruta del Café"**: la consigna pedía demostrar creatividad, así que
+  el contenido se ambientó en el Eje Cafetero colombiano (Manizales, Pereira,
+  Armenia, Salento, Filandia, Circasia) en vez de usar el ejemplo genérico
+  del template de R Markdown.
+- **`self_contained: true`**: `index.html` empaqueta sus propios assets (JS,
+  CSS, fuentes) en un solo archivo, así que se ve igual sin depender de rutas
+  relativas al publicarlo en GitHub Pages, RPubs o Neocities.
 
-> Vuelve a compilar (`rmarkdown::render`) justo antes de entregar la tarea,
-> para que la fecha mostrada sea reciente (la rúbrica exige menos de 2 meses
-> respecto a la fecha de calificación).
+## Contenido
 
-## 2. Publicar
+- `index.Rmd` — fuente en R Markdown.
+- `index.html` — versión compilada (autocontenida), la que sirve GitHub Pages.
 
-Elige una opción (la tarea solo pide una):
+## Rama protegida
 
-### GitHub Pages
-1. Haz commit y push de `index.html` (y `index.Rmd`) a este repositorio.
-2. En GitHub: Settings → Pages → Source → rama `main`, carpeta `/ (root)`.
-3. La URL será `https://<usuario>.github.io/<repo>/index.html`.
-
-### RPubs
-En RStudio, abre `index.Rmd`, haz clic en **Knit** y luego en el botón
-**Publish** de la vista previa → **RPubs**.
-
-### Neocities
-1. Crea una cuenta en Neocities.
-2. Sube `index.html` (puedes renombrarlo a `index.html` en la raíz del sitio).
-3. La URL será `https://<tu-sitio>.neocities.org`.
+`main` tiene protección de rama activa: cualquier cambio requiere pull
+request con al menos una revisión aprobada, no admite force-push ni borrado,
+y la regla aplica también al owner. Esto evita que un PR externo (por
+ejemplo, desde un fork) modifique o rompa la entrega sin revisión explícita.
