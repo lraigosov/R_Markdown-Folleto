@@ -9,11 +9,6 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(leaflet)
-
-meses <- c("enero", "febrero", "marzo", "abril", "mayo", "junio",
-           "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre")
-hoy <- Sys.Date()
-fecha_es <- paste0(format(hoy, "%d"), " de ", meses[as.integer(format(hoy, "%m"))], " de ", format(hoy, "%Y"))
 ```
 
 ```{=html}
@@ -109,14 +104,12 @@ body {
 </style>
 ```
 
-```{r hero, results='asis'}
-cat(sprintf('
+```{=html}
 <div class="folleto-hero">
   <h1>☕ Ruta del Café</h1>
   <p class="subtitulo">Un recorrido interactivo por los pueblos del Eje Cafetero colombiano</p>
-  <div class="fecha-creacion">📅 Documento creado el %s</div>
+  <div class="fecha-creacion">📅 Documento creado el <span class="js-fecha-actual">—</span></div>
 </div>
-', fecha_es))
 ```
 
 <div class="contenido">
@@ -212,6 +205,19 @@ Tranquilidad quindiana, parque central y aire de pueblo tradicional.
 
 </div>
 
-```{r pie, results='asis'}
-cat(sprintf('<div class="pie">Folleto creado con R Markdown y Leaflet · %s</div>', fecha_es))
+```{=html}
+<div class="pie">Folleto creado con R Markdown y Leaflet · <span class="js-fecha-actual">—</span></div>
+
+<script>
+(function () {
+  var meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio",
+               "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  var hoy = new Date();
+  hoy.setDate(hoy.getDate() - 5);
+  var texto = hoy.getDate() + " de " + meses[hoy.getMonth()] + " de " + hoy.getFullYear();
+  document.querySelectorAll(".js-fecha-actual").forEach(function (el) {
+    el.textContent = texto;
+  });
+})();
+</script>
 ```

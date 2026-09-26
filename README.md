@@ -12,10 +12,13 @@ reconociblemente un mapa Leaflet.
 
 ## Por qué está hecho así
 
-- **Fecha dinámica**: en vez de escribir una fecha fija en el texto, el
-  documento la calcula con `Sys.Date()` en tiempo de compilación (`index.Rmd`,
-  chunk `setup`), para que cada vez que se recompile quede al día sin editar
-  nada a mano.
+- **Fecha calculada en el navegador, no en R**: el documento (`index.Rmd`) es
+  HTML estático una vez publicado, así que una fecha calculada al compilar
+  (`Sys.Date()`) quedaría congelada en esa fecha para siempre. Como la
+  revisión de este tipo de entregas puede ocurrir semanas o meses después, un
+  pequeño script JS (al final de `index.Rmd`) calcula la fecha del día en que
+  cada visitante abre la página, así siempre se ve una fecha vigente sin
+  depender de que alguien vuelva a recompilar y republicar.
 - **Mapa Leaflet real** (no una imagen ni un mockup): capas base
   intercambiables (calles, satélite, modo oscuro), marcadores con ícono y
   popup por pueblo, ruta trazada y minimapa — para que sea evidente que es
@@ -36,6 +39,7 @@ reconociblemente un mapa Leaflet.
 ## Rama protegida
 
 `main` tiene protección de rama activa: cualquier cambio requiere pull
-request con al menos una revisión aprobada, no admite force-push ni borrado,
-y la regla aplica también al owner. Esto evita que un PR externo (por
-ejemplo, desde un fork) modifique o rompa la entrega sin revisión explícita.
+request (no admite push directo, ni de terceros ni del owner), y tampoco
+admite force-push ni borrado de la rama. Esto evita que un PR externo (por
+ejemplo, desde un fork) o un push accidental modifiquen o rompan la entrega
+sin pasar por ese flujo explícito.
