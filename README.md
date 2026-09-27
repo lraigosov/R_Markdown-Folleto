@@ -10,6 +10,8 @@ publicación propias); comparten repositorio solo por conveniencia.
   (`shiny-app/`) — publicada.
 - **[Presentación reproducible del pitch](#presentación-reproducible-del-pitch)**
   (`pitch-presentation/`) — publicada.
+- **[Ruta del Café: Mapa de Sabores en 3D — R Markdown + Plotly](#ruta-del-café-mapa-de-sabores-en-3d--r-markdown--plotly)**
+  (`plotly-presentation/`) — publicada.
 
 ---
 
@@ -113,6 +115,38 @@ al generar el documento.
 
 - [`pitch-presentation/`](pitch-presentation/) — `index.Rmd`, `index.html` y
   su propio README con el checklist de la rúbrica.
+
+---
+
+## Ruta del Café: Mapa de Sabores en 3D — R Markdown + Plotly
+
+**Página publicada:** https://lraigosov.github.io/R_Markdown-Folleto/plotly-presentation/
+
+### Qué es esto
+
+Otra entrega de Coursera del mismo curso: una página web hecha con R
+Markdown que incluya un gráfico interactivo hecho con Plotly, publicada en
+GitHub Pages, RPubs o Neocities. La rúbrica evalúa lo mismo que la del
+folleto Leaflet: fecha reciente, y un gráfico reconociblemente de Plotly.
+
+### Por qué está hecho así
+
+- **Mismo truco de fecha por JavaScript** que el folleto Leaflet: se calcula
+  en el navegador de quien visite la página, así nunca queda congelada en
+  la fecha de la última compilación.
+- **Gráfico 3D real de Plotly, no una imagen**: dispersión 3D de los seis
+  pueblos cafeteros (altitud / acidez / cuerpo, dulzor en color), con
+  arrastre para rotar, zoom, tooltips enriquecidos, y botones propios para
+  cambiar el ángulo de cámara — inequívocamente el modebar y los widgets de
+  Plotly, no una captura de pantalla.
+- **Reutiliza el mismo dataset ilustrativo** (`calcular_perfil()`) que la
+  app Shiny, para mantener consistencia temática entre los proyectos del
+  repo.
+
+### Contenido
+
+- [`plotly-presentation/`](plotly-presentation/) — `index.Rmd`, `index.html`
+  y su propio README.
 
 ---
 
