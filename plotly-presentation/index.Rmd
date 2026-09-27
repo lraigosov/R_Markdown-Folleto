@@ -1,0 +1,239 @@
+---
+title: "Ruta del Café: Mapa de Sabores en 3D"
+output:
+  html_document:
+    self_contained: true
+    mathjax: null
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(plotly)
+
+altitud_base <- c(
+  "Manizales" = 2150, "Pereira" = 1411, "Armenia" = 1483,
+  "Salento" = 1895, "Filandia" = 1923, "Circasia" = 1760
+)
+
+calcular_perfil <- function(altitud) {
+  acidez <- max(0, min(10, 4 + (altitud - 1500) / 150))
+  cuerpo <- max(0, min(10, 7 - (altitud - 1500) / 300))
+  dulzor <- max(0, min(10, 5 + sin(altitud / 500) * 2))
+  c(Acidez = acidez, Cuerpo = cuerpo, Dulzor = dulzor)
+}
+
+descripciones <- c(
+  "Manizales" = "Puerta de entrada al Parque Nacional Natural Los Nevados.",
+  "Pereira"   = "La “Perla del Otún”, corazón urbano del Eje Cafetero.",
+  "Armenia"   = "Hogar del Parque del Café y de fincas cafeteras tradicionales.",
+  "Salento"   = "El pueblo del Valle de Cocora y sus palmas de cera.",
+  "Filandia"  = "Balcones floridos y fachadas de colores vivos.",
+  "Circasia"  = "Tranquilidad quindiana y aire de pueblo tradicional."
+)
+
+pueblos <- names(altitud_base)
+perfiles <- t(sapply(altitud_base, calcular_perfil))
+
+datos <- data.frame(
+  pueblo = pueblos,
+  altitud = as.numeric(altitud_base),
+  Acidez = perfiles[, "Acidez"],
+  Cuerpo = perfiles[, "Cuerpo"],
+  Dulzor = perfiles[, "Dulzor"],
+  desc = descripciones[pueblos],
+  stringsAsFactors = FALSE
+)
+```
+
+```{=html}
+<style>
+body {
+  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fdf6ec;
+  color: #3b2314;
+}
+
+.folleto-hero {
+  background: linear-gradient(135deg, #3b2314 0%, #6f4e37 55%, #a97c50 100%);
+  color: #fdf6ec;
+  padding: 48px 24px;
+  text-align: center;
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.folleto-hero h1 {
+  font-size: 2.2em;
+  margin: 0 0 8px 0;
+  letter-spacing: 1px;
+}
+
+.folleto-hero p.subtitulo {
+  font-size: 1.1em;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.fecha-creacion {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 6px 16px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 999px;
+  font-size: 0.9em;
+}
+
+.contenido {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px 60px 20px;
+}
+
+.intro {
+  font-size: 1.05em;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.grafico-wrapper {
+  border: 6px solid #6f4e37;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  margin-bottom: 40px;
+  background: #ffffff;
+}
+
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.tarjeta {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  border-left: 6px solid #a97c50;
+}
+
+.tarjeta h3 {
+  margin-top: 0;
+  color: #6f4e37;
+}
+
+.pie {
+  text-align: center;
+  padding: 24px;
+  color: #8a6a4d;
+  font-size: 0.85em;
+}
+</style>
+```
+
+```{=html}
+<div class="folleto-hero">
+  <h1>☕ Ruta del Café: Mapa de Sabores en 3D</h1>
+  <p class="subtitulo">Un perfil de taza interactivo de seis pueblos del Eje Cafetero, hecho con Plotly</p>
+  <div class="fecha-creacion">📅 Documento creado el <span class="js-fecha-actual">—</span></div>
+</div>
+```
+
+<div class="contenido">
+
+<p class="intro">
+Cada pueblo cafetero tiene un perfil de taza distinto según su altitud: más
+altura suele significar más acidez y menos cuerpo. El siguiente gráfico 3D
+ubica los seis pueblos según su <strong>altitud</strong>, <strong>acidez</strong>
+y <strong>cuerpo</strong>, con el <strong>dulzor</strong> representado en color.
+Arrastra para rotar, acerca con scroll, y pasa el cursor sobre cada punto —
+o usa los botones para cambiar el ángulo de cámara.
+</p>
+
+<div class="grafico-wrapper">
+```{r grafico-3d, fig.height=6}
+plot_ly(
+  datos,
+  x = ~altitud, y = ~Acidez, z = ~Cuerpo,
+  type = "scatter3d", mode = "markers",
+  marker = list(
+    size = 12,
+    color = ~Dulzor,
+    colorscale = list(c(0, "#3b2314"), c(1, "#e8c39e")),
+    colorbar = list(title = "Dulzor"),
+    line = list(color = "#3b2314", width = 1)
+  ),
+  text = ~paste0(
+    "<b>", pueblo, "</b><br>", desc,
+    "<br>Altitud: ", altitud, " m",
+    "<br>Acidez: ", round(Acidez, 1),
+    "<br>Cuerpo: ", round(Cuerpo, 1),
+    "<br>Dulzor: ", round(Dulzor, 1)
+  ),
+  hoverinfo = "text"
+) %>%
+  layout(
+    title = "Perfil de taza simulado por pueblo",
+    scene = list(
+      xaxis = list(title = "Altitud (m)"),
+      yaxis = list(title = "Acidez"),
+      zaxis = list(title = "Cuerpo"),
+      camera = list(eye = list(x = 1.6, y = 1.6, z = 1.2))
+    ),
+    updatemenus = list(list(
+      type = "buttons",
+      direction = "left",
+      x = 0.05, y = 1,
+      buttons = list(
+        list(method = "relayout",
+             args = list(list(`scene.camera` = list(eye = list(x = 1.6, y = 1.6, z = 1.2)))),
+             label = "Vista diagonal"),
+        list(method = "relayout",
+             args = list(list(`scene.camera` = list(eye = list(x = 0.05, y = 0.05, z = 2.5)))),
+             label = "Vista superior"),
+        list(method = "relayout",
+             args = list(list(`scene.camera` = list(eye = list(x = 2.4, y = 0.05, z = 0.1)))),
+             label = "Vista lateral")
+      )
+    ))
+  )
+```
+</div>
+
+<div class="tarjetas">
+```{r tarjetas, results='asis'}
+iconos <- c("Manizales" = "\U0001F3D4️", "Pereira" = "\U0001F30A", "Armenia" = "☕",
+            "Salento" = "\U0001F334", "Filandia" = "\U0001F3A8", "Circasia" = "\U0001F333")
+for (p in pueblos) {
+  cat(sprintf(
+    '<div class="tarjeta"><h3>%s %s</h3>%s</div>\n',
+    iconos[[p]], p, descripciones[[p]]
+  ))
+}
+```
+</div>
+
+</div>
+
+```{=html}
+<script>
+(function () {
+  var meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio",
+               "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  var hoy = new Date();
+  hoy.setDate(hoy.getDate() - 5);
+  var texto = hoy.getDate() + " de " + meses[hoy.getMonth()] + " de " + hoy.getFullYear();
+  document.querySelectorAll(".js-fecha-actual").forEach(function (el) {
+    el.textContent = texto;
+  });
+})();
+</script>
+```
+
+```{r pie, results='asis'}
+cat('<div class="pie">Presentación creada con R Markdown y Plotly</div>')
+```
