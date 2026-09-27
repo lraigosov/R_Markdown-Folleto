@@ -6,10 +6,10 @@ publicación propias); comparten repositorio solo por conveniencia.
 
 - **[Ruta del Café — folleto R Markdown + Leaflet](#ruta-del-café--folleto-en-r-markdown-con-leaflet)**
   (raíz del repo, `index.Rmd` / `index.html`) — publicado y cerrado.
-- **[App Shiny — Estimador de Perfil de Taza](shiny-app/)** — publicada:
-  https://lraigosov.shinyapps.io/ruta-del-cafe-perfil-taza/
-- **[Presentación reproducible del pitch](pitch-presentation/)** — publicada:
-  https://lraigosov.github.io/R_Markdown-Folleto/pitch-presentation/
+- **[App Shiny — Estimador de Perfil de Taza](#app-shiny--estimador-de-perfil-de-taza)**
+  (`shiny-app/`) — publicada.
+- **[Presentación reproducible del pitch](#presentación-reproducible-del-pitch)**
+  (`pitch-presentation/`) — publicada.
 
 ---
 
@@ -50,6 +50,69 @@ reconociblemente un mapa Leaflet.
 
 - `index.Rmd` — fuente en R Markdown.
 - `index.html` — versión compilada (autocontenida), la que sirve GitHub Pages.
+
+---
+
+## App Shiny — Estimador de Perfil de Taza
+
+**App publicada:** https://lraigosov.shinyapps.io/ruta-del-cafe-perfil-taza/
+
+### Qué es esto
+
+Segunda tarea evaluada por pares del mismo curso: escribir una app Shiny con
+documentación de apoyo, desplegarla en shinyapps.io, y compartir `ui.R` /
+`server.R` en GitHub. La rúbrica exige un widget de entrada, una operación
+sobre esa entrada en `server.R`, una salida reactiva, y documentación
+suficiente **dentro del propio sitio de Shiny** (no en un link externo).
+
+### Por qué está hecho así
+
+- **Sigue el tema "Ruta del Café"**: en vez de un ejemplo genérico (p. ej.
+  una regresión sobre `mtcars`), la app deja elegir un pueblo cafetero y una
+  altitud simulada, y calcula un perfil de taza ilustrativo (acidez, cuerpo,
+  dulzor) — para no ser una copia al carbón del ejemplo visto en clase.
+- **Documentación en su propia pestaña**: "Cómo usar esta app" explica el
+  propósito y el uso paso a paso, cumpliendo el requisito de que la
+  documentación viva en el sitio mismo.
+- **Datos declarados como ilustrativos**: el texto dentro de la app aclara
+  que los puntajes son simulados con fines didácticos, no mediciones reales
+  de catación.
+
+### Contenido
+
+- [`shiny-app/`](shiny-app/) — `ui.R`, `server.R` y su propio README con el
+  checklist de la rúbrica.
+
+---
+
+## Presentación reproducible del pitch
+
+**Publicada:** https://lraigosov.github.io/R_Markdown-Folleto/pitch-presentation/
+
+### Qué es esto
+
+Complemento de la app Shiny: una presentación de 5 diapositivas (incluida la
+de título) que la promociona, con expresiones R incrustadas que se evalúan
+al generar el documento.
+
+### Por qué está hecho así
+
+- **`ioslides_presentation` en vez de `.Rpres`**: logra el mismo resultado
+  que "R Presentations"/RStudio Presenter (HTML5, ioslides.js) pero se
+  renderiza con `rmarkdown::render()` desde línea de comandos, sin depender
+  de la IDE de RStudio.
+- **Código en vivo, no capturas**: la diapositiva "Cómo funciona (en vivo)"
+  reutiliza la misma función `calcular_perfil()` de `server.R`, así que el
+  número y el gráfico que se ven ahí se recalculan cada vez que se
+  recompila el documento.
+- **Publicada en el mismo `main`**: no necesitó una rama `gh-pages` (esa
+  exigencia de la tarea aplica solo si se usa Slidify, que ya no publica a
+  RPubs).
+
+### Contenido
+
+- [`pitch-presentation/`](pitch-presentation/) — `index.Rmd`, `index.html` y
+  su propio README con el checklist de la rúbrica.
 
 ---
 
