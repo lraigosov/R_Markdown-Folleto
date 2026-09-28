@@ -72,6 +72,23 @@ body {
   margin-bottom: 40px;
 }
 
+.mapa-badge {
+  display: block;
+  text-align: center;
+  margin: 0 0 14px 0;
+}
+
+.mapa-badge span {
+  display: inline-block;
+  padding: 8px 18px;
+  background: #6f4e37;
+  color: #fdf6ec;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 0.95em;
+  letter-spacing: 0.3px;
+}
+
 .tarjetas {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -121,6 +138,8 @@ Explora el mapa a continuación: cambia entre vista de calles, satélite y modo
 oscuro, activa o desactiva la ruta sugerida, y haz clic sobre cada marcador
 para conocer más sobre cada destino.
 </p>
+
+<p class="mapa-badge"><span>🍃 Mapa interactivo hecho con Leaflet</span></p>
 
 <div class="mapa-wrapper">
 ```{r mapa-cafe}
