@@ -9,6 +9,11 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(leaflet)
+
+meses <- c("enero", "febrero", "marzo", "abril", "mayo", "junio",
+           "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre")
+hoy <- Sys.Date()
+fecha_respaldo <- paste0(format(hoy, "%d"), " de ", meses[as.integer(format(hoy, "%m"))], " de ", format(hoy, "%Y"))
 ```
 
 ```{=html}
@@ -121,12 +126,14 @@ body {
 </style>
 ```
 
-```{=html}
+```{r hero, results='asis'}
+cat(sprintf('
 <div class="folleto-hero">
   <h1>☕ Ruta del Café</h1>
   <p class="subtitulo">Un recorrido interactivo por los pueblos del Eje Cafetero colombiano</p>
-  <div class="fecha-creacion">📅 Documento creado el <span class="js-fecha-actual">—</span></div>
+  <div class="fecha-creacion">📅 Documento creado el <span class="js-fecha-actual"></span><noscript>%s</noscript></div>
 </div>
+', fecha_respaldo))
 ```
 
 <div class="contenido">
@@ -142,6 +149,7 @@ para conocer más sobre cada destino.
 <p class="mapa-badge"><span>🍃 Mapa interactivo hecho con Leaflet</span></p>
 
 <div class="mapa-wrapper">
+<noscript><p style="text-align:center;padding:40px 20px;color:#6f4e37;font-weight:bold;">⚠️ Este mapa interactivo (hecho con la librería Leaflet) requiere JavaScript habilitado en tu navegador para mostrarse.</p></noscript>
 ```{r mapa-cafe}
 cafe_towns <- data.frame(
   name = c("Manizales", "Pereira", "Armenia", "Salento", "Filandia", "Circasia"),
@@ -224,9 +232,11 @@ Tranquilidad quindiana, parque central y aire de pueblo tradicional.
 
 </div>
 
-```{=html}
-<div class="pie">Folleto creado con R Markdown y Leaflet · <span class="js-fecha-actual">—</span></div>
+```{r pie, results='asis'}
+cat(sprintf('<div class="pie">Folleto creado con R Markdown y Leaflet · <span class="js-fecha-actual"></span><noscript>%s</noscript></div>', fecha_respaldo))
+```
 
+```{=html}
 <script>
 (function () {
   var meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio",
